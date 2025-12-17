@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Учебная часть</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo">🎓 Учебная часть / Администратор</h1>
+                <div class="nav-links">
+                    <a href="#" onclick="logout()">Выйти</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="dashboard-nav">
+            <ul>
+                <li><a href="#" onclick="showTab('groups'); return false;" id="nav-groups" class="active">Группы</a></li>
+                <li><a href="#" onclick="showTab('students'); return false;" id="nav-students">Студенты</a></li>
+                <li><a href="#" onclick="showTab('teachers'); return false;" id="nav-teachers">Преподаватели</a></li>
+                <li><a href="#" onclick="showTab('subjects'); return false;" id="nav-subjects">Предметы</a></li>
+            </ul>
+        </div>
+
+        <!-- Groups Tab -->
+        <div id="groups" class="tab-content" style="display: block;">
+            <div class="btn-container-between">
+                <h3>Управление группами</h3>
+                <button class="btn" onclick="showModal('addGroupModal')">Добавить группу</button>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                        <th>Предметов</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="groupsTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Students Tab -->
+        <div id="students" class="tab-content" style="display: none;">
+            <div class="btn-container-between">
+                <h3>Управление студентами</h3>
+                <button class="btn" onclick="showAddStudentModal()">Добавить студента</button>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ФИО</th>
+                        <th>Группа</th>
+                        <th>Логин</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="studentsTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Teachers Tab -->
+        <div id="teachers" class="tab-content" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3>Список преподавателей</h3>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ФИО</th>
+                        <th>Кафедра</th>
+                        <th>Логин</th>
+                    </tr>
+                </thead>
+                <tbody id="teachersTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Subjects Tab -->
+        <div id="subjects" class="tab-content" style="display: none;">
+            <div class="btn-container-between">
+                <h3>Управление предметами</h3>
+                <button class="btn" onclick="showAddSubjectModal()">Добавить предмет</button>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                        <th>Часы/Кредиты</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="subjectsTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add Group Modal -->
+    <div id="addGroupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addGroupModal')">&times;</span>
+            <h2>Добавить группу</h2>
+            <div>
+                <form id="addGroupForm" onsubmit="handleAddGroup(event); return false;">
+                    <div class="form-group">
+                        <label>Название группы</label>
+                        <input type="text" id="newGroupName" required>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <button type="submit" form="addGroupForm" class="btn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="addStudentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addStudentModal')">&times;</span>
+            <h2>Добавить студента</h2>
+            <div>
+                <form id="addStudentForm" onsubmit="handleAddStudent(event); return false;">
+                    <div class="form-group">
+                        <label>ФИО</label>
+                        <input type="text" id="newStudentName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Группа</label>
+                        <select id="newStudentGroup" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Логин</label>
+                        <input type="text" id="newStudentLogin" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="text" id="newStudentPassword" value="123" required>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <button type="submit" form="addStudentForm" class="btn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="addSubjectModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addSubjectModal')">&times;</span>
+            <h2>Добавить предмет</h2>
+            <div>
+                <form id="addSubjectForm" onsubmit="handleAddSubject(event); return false;">
+                    <div class="form-group">
+                        <label>Название</label>
+                        <input type="text" id="newSubjectName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Часы</label>
+                        <input type="number" id="newSubjectHours" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Кредиты</label>
+                        <input type="number" id="newSubjectCredits" required>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <button type="submit" form="addSubjectForm" class="btn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно профиля предмета -->
+    <div id="subjectProfileModal" class="modal">
+        <div class="modal-content" style="max-width: 700px">
+            <span class="close" onclick="closeSubjectProfile()">&times;</span>
+            <h2 id="profileSubjectName">Профиль предмета</h2>
+
+            <div>
+                <div style="margin-bottom: 2rem">
+                    <h3>Информация о предмете</h3>
+                    <p><strong>Название:</strong> <span id="profileSubjectTitle">-</span></p>
+                    <p><strong>Часы:</strong> <span id="profileSubjectHours">-</span></p>
+                    <p><strong>Кредиты:</strong> <span id="profileSubjectCredits">-</span></p>
+                </div>
+
+                <div style="margin-bottom: 2rem">
+                    <h3>Назначение преподавателей</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Преподаватель</th>
+                                <th>Назначен</th>
+                            </tr>
+                        </thead>
+                        <tbody id="profileSubjectTeachersTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button class="btn" onclick="closeSubjectProfile()">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно профиля преподавателя -->
+    <div id="teacherProfileModal" class="modal">
+        <div class="modal-content" style="max-width: 700px">
+            <span class="close" onclick="closeTeacherProfile()">&times;</span>
+            <h2 id="profileTeacherName">Профиль преподавателя</h2>
+
+            <div>
+                <div style="margin-bottom: 2rem">
+                    <h3>Личная информация</h3>
+                    <p><strong>ФИО:</strong> <span id="profileTeacherFullName">-</span></p>
+                    <p><strong>Кафедра:</strong> <span id="profileTeacherDept">-</span></p>
+                    <p><strong>Логин:</strong> <span id="profileTeacherLogin">-</span></p>
+                </div>
+
+                <div style="margin-bottom: 2rem">
+                    <h3>Назначение предметов</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Предмет</th>
+                                <th>Назначен</th>
+                            </tr>
+                        </thead>
+                        <tbody id="profileTeacherSubjectsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button class="btn" onclick="closeTeacherProfile()">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно профиля группы -->
+    <div id="groupProfileModal" class="modal">
+        <div class="modal-content" style="max-width: 700px">
+            <span class="close" onclick="closeGroupProfile()">&times;</span>
+            <h2 id="profileGroupName">Профиль группы</h2>
+
+            <div>
+                <div style="margin-bottom: 2rem">
+                    <h3>Назначение предметов</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Предмет</th>
+                                <th>Назначен</th>
+                            </tr>
+                        </thead>
+                        <tbody id="profileGroupSubjectsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button class="btn" onclick="closeGroupProfile()">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="alertContainer"></div>
+
+    <script src="js/data.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

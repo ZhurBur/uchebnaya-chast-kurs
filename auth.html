@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - Учебная часть</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo">🎓 Учебная часть</h1>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div style="max-width: 400px; margin: 50px auto; background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <h2 style="text-align: center; margin-bottom: 1.5rem;">Вход в систему</h2>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="login">Логин</label>
+                    <input type="text" id="login" required placeholder="Введите логин">
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" required placeholder="Введите пароль">
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Войти</button>
+            </form>
+
+            <div id="alertContainer" style="margin-top: 1rem;"></div>
+
+            <div style="margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 4px; font-size: 0.9rem;">
+                <p><strong>Демо-доступ:</strong></p>
+                <ul style="padding-left: 1.2rem;">
+                    <li>Админ: admin / 123</li>
+                    <li>Преподаватель: teacher / 123</li>
+                    <li>Студент: student / 123</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initDatabase();
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const loginInput = document.getElementById('login').value;
+            const passwordInput = document.getElementById('password').value;
+
+            const users = getUsers();
+            const user = users.find(u => u.login === loginInput && u.password === passwordInput);
+
+            if (user) {
+                sessionStorage.setItem('currentUser', JSON.stringify(user));
+                
+                switch(user.role) {
+                    case 'admin':
+                        window.location.href = 'admin.html';
+                        break;
+                    case 'teacher':
+                        window.location.href = 'teacher.html';
+                        break;
+                    case 'student':
+                        window.location.href = 'student.html';
+                        break;
+                    default:
+                        showAlert('Неизвестная роль пользователя', 'error');
+                }
+            } else {
+                showAlert('Неверный логин или пароль', 'error');
+            }
+        });
+    </script>
+</body>
+</html>

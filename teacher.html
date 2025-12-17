@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Преподаватель - Учебная часть</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="nav-container">
+          <h1 class="logo">🎓 Учебная часть / Преподаватель</h1>
+          <div class="nav-links">
+            <span id="teacherName"></span>
+            <a href="#" onclick="logout()">Выйти</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="dashboard-nav">
+        <ul>
+          <li><a href="#" onclick="showStudentsTab('withGrades'); return false;" id="nav-withGrades" class="active">Со оценками</a></li>
+          <li><a href="#" onclick="showStudentsTab('withoutGrades'); return false;" id="nav-withoutGrades">Без оценок</a></li>
+        </ul>
+      </div>
+
+      <!-- Таб со студентами с оценками -->
+      <div id="withGrades" class="tab-content" style="display: block">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Студент</th>
+              <th>Группа</th>
+            </tr>
+          </thead>
+          <tbody id="studentsTableWithGrades"></tbody>
+        </table>
+      </div>
+
+      <!-- Таб со студентами без оценок -->
+      <div id="withoutGrades" class="tab-content" style="display: none">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Студент</th>
+              <th>Группа</th>
+            </tr>
+          </thead>
+          <tbody id="studentsTableWithoutGrades"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="alertContainer"></div>
+
+    <!-- Модальное окно профиля студента -->
+    <div id="studentProfileModal" class="modal">
+      <div class="modal-content" style="max-width: 600px">
+        <span class="close" onclick="closeStudentProfile()">&times;</span>
+        <h2 id="profileStudentName">Профиль студента</h2>
+
+        <div style="margin-bottom: 2rem">
+          <h3>Личная информация</h3>
+          <p><strong>ФИО:</strong> <span id="profileName">-</span></p>
+          <p><strong>Группа:</strong> <span id="profileGroup">-</span></p>
+          <p><strong>Логин:</strong> <span id="profileLogin">-</span></p>
+        </div>
+
+        <div style="margin-bottom: 2rem">
+          <h3>Предметы и оценки</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Предмет</th>
+                <th>Оценка</th>
+              </tr>
+            </thead>
+            <tbody id="profileSubjectsTable"></tbody>
+          </table>
+        </div>
+
+        <div class="btn-container">
+          <button class="btn btn-danger" onclick="deleteStudent()">
+            Удалить студента
+          </button>
+          <button class="btn" onclick="closeStudentProfile()">Закрыть</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/teacher.js"></script>
+  </body>
+</html>

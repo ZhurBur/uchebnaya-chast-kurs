@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Студент - Учебная часть</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo">🎓 Учебная часть / Студент</h1>
+                <div class="nav-links">
+                    <span id="studentName"></span>
+                    <a href="#" onclick="logout()">Выйти</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="dashboard-nav">
+            <ul>
+                <li><a href="#" class="active">Успеваемость</a></li>
+            </ul>
+        </div>
+
+        <div class="tab-content" style="display: block;">
+            <div style="margin-bottom: 2rem; padding: 1rem; background: #fff; border: 1px solid #dee2e6; border-radius: 4px;">
+                <h3>Личные данные</h3>
+                <p><strong>ФИО:</strong> <span id="infoName">-</span></p>
+                <p><strong>Группа:</strong> <span id="infoGroup">-</span></p>
+            </div>
+
+            <h3>Оценки по предметам</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Предмет</th>
+                        <th>Преподаватель</th>
+                        <th>Часы / Кредиты</th>
+                        <th>Оценка</th>
+                    </tr>
+                </thead>
+                <tbody id="gradesTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/student.js"></script>
+</body>
+</html>
