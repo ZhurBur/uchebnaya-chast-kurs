@@ -1,32 +1,3 @@
-[readme.md](https://github.com/user-attachments/files/24162511/readme.md)
-### Запуск проекта
-
-Проект будет корректно работать под управлением локального Node сервера. Для этого нужно установить на машину `Node.js` [https://nodejs.org/en/download](https://nodejs.org/en/download) и `npm` (`Node` сам предложит его установить во время инсталляции) в папке с проектом. После этого в той же командной строке выполнить команду установки `npm` пакета `http-server`:
-
-`npm install http-server`
-
-и дождаться установки. После этого нужно в этой же папке запустить сервер:
-
-`http-server`
-
-После этого в консоли отобразится локальный адрес приложения, скорее всего, это будет выглядеть так:
-
-```
-PS project_folder> http-server
-Starting up http-server, serving ./
-http-server version: 14.1.1
-
-...
-
-Available on:
-  http://192.168.43.28:8080
-  http://127.0.0.1:8080
-  http://172.23.96.1:8080
-  http://172.29.160.1:8080
-Hit CTRL-C to stop the server
-```
-
-
 
 ## Система учебной части
 
