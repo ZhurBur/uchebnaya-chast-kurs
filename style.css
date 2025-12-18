@@ -1,25 +1,44 @@
-/* Reset & Base */
+/* Добавьте в самое начало файла импорт шрифта Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap&subset=cyrillic,cyrillic-ext');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Убедитесь, что в body указаны шрифты с поддержкой кириллицы */
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Roboto', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   background-color: #f5f7fa;
   color: #2c3e50;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Для таблиц и других элементов тоже убедитесь в правильном шрифте */
+.table th,
+.table td,
+.btn,
+.form-group input,
+.form-group select,
+.modal-content {
+  font-family: 'Roboto', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Остальной код остается без изменений, но вот некоторые улучшения: */
 .banner {
   align-items: center;
   display: grid;
-  grid-template-columns: repeat(2, 2fr);
+  grid-template-columns: repeat(2, 1fr); /* Исправлено: было 2fr, должно быть 1fr */
   gap: 20px;
   padding: 20px;
 }
+
 .banner img {
   max-width: 100%;
+  height: auto;
 }
 
 .btn-container,
@@ -197,10 +216,9 @@ body {
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  display: none; /* Hidden by default */
+  display: none;
 }
 
-/* Explicitly show active tab (handled by JS, but good to have a class) */
 .tab-content.active {
   display: block;
 }
@@ -310,21 +328,22 @@ body {
 }
 
 .modal-content {
-  background-color: #fff !important;
+  background-color: #fff;
   border-radius: 8px;
-  width: 90% !important;
-  max-width: 500px !important;
-  position: relative !important;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  margin: 0 !important;
-  max-height: 90vh !important;
-  display: flex !important;
-  flex-direction: column !important;
-  overflow: hidden !important;
-  box-sizing: border-box !important;
+  margin: 0;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
-.modal-content > .close {
+/* Убрал !important для лучшей поддержки */
+.modal-content .close {
   position: absolute;
   right: 1.5rem;
   top: 1rem;
@@ -333,7 +352,7 @@ body {
 
 .modal-content > h2 {
   flex-shrink: 0;
-  margin: 2rem 2rem 1.5rem 2rem !important;
+  margin: 2rem 2rem 1.5rem 2rem;
   color: #2c3e50;
   padding-right: 2rem;
 }
@@ -355,9 +374,8 @@ body {
 .modal-content > button,
 .modal-content > div:has(> button) {
   flex-shrink: 0;
-  /* min-height: auto; */
-  padding: 1.5rem 2rem 2rem 2rem !important;
-  margin: 0 !important;
+  padding: 1.5rem 2rem 2rem 2rem;
+  margin: 0;
   background-color: #f8f9fa;
   border-top: 1px solid #e9ecef;
   box-sizing: border-box;
@@ -430,4 +448,9 @@ body {
 }
 .alert-info {
   background-color: #3498db;
+}
+
+/* Для специальных модальных окон с шириной 700px */
+.modal-content[style*="max-width: 700px"] {
+  max-width: 700px !important;
 }
