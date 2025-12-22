@@ -1,120 +1,120 @@
 // JavaScript source code
 /**
- * МОДУЛЬ УПРАВЛЕНИЯ ДАННЫМИ
- * Содержит инициализацию БД, функции для работы с localStorage
- * и вспомогательные функции для валидации
+ * ГЊГЋГ„Г“Г‹Гњ Г“ГЏГђГЂГ‚Г‹Г…ГЌГ€Гџ Г„ГЂГЌГЌГ›ГЊГ€
+ * Г‘Г®Г¤ГҐГ°Г¦ГЁГІ ГЁГ­ГЁГ¶ГЁГ Г«ГЁГ§Г Г¶ГЁГѕ ГЃГ„, ГґГіГ­ГЄГ¶ГЁГЁ Г¤Г«Гї Г°Г ГЎГ®ГІГ» Г± localStorage
+ * ГЁ ГўГ±ГЇГ®Г¬Г®ГЈГ ГІГҐГ«ГјГ­Г»ГҐ ГґГіГ­ГЄГ¶ГЁГЁ Г¤Г«Гї ГўГ Г«ГЁГ¤Г Г¶ГЁГЁ
  */
 
 /**
- * Массив преподавателей (статичные данные)
- * Содержит 10 преподавателей по 4 кафедрам
+ * ГЊГ Г±Г±ГЁГў ГЇГ°ГҐГЇГ®Г¤Г ГўГ ГІГҐГ«ГҐГ© (Г±ГІГ ГІГЁГ·Г­Г»ГҐ Г¤Г Г­Г­Г»ГҐ)
+ * Г‘Г®Г¤ГҐГ°Г¦ГЁГІ 10 ГЇГ°ГҐГЇГ®Г¤Г ГўГ ГІГҐГ«ГҐГ© ГЇГ® 4 ГЄГ ГґГҐГ¤Г°Г Г¬
  */
 const Teachers = [
   {
     id: 2,
     role: "teacher",
-    name: "Петров П.П.",
+    name: "РРІР°РЅРѕРІР° Р.Р.",
     login: "teacher",
     password: "123",
-    department: "Кафедра ИТ",
+    department: "ГЉГ ГґГҐГ¤Г°Г  Г€Г’",
   },
   {
     id: 3,
     role: "teacher",
-    name: "Сидоров С.С.",
+    name: "Г‘ГЁГ¤Г®Г°Г®Гў Г‘.Г‘.",
     login: "teacher2",
     password: "123",
-    department: "Кафедра ИТ",
+    department: "ГЉГ ГґГҐГ¤Г°Г  Г€Г’",
   },
   {
     id: 5,
     role: "teacher",
-    name: "Волков В.В.",
+    name: "Г‚Г®Г«ГЄГ®Гў Г‚.Г‚.",
     login: "teacher4",
     password: "123",
-    department: "Кафедра Экономики",
+    department: "ГЉГ ГґГҐГ¤Г°Г  ГќГЄГ®Г­Г®Г¬ГЁГЄГЁ",
   },
   {
     id: 4,
     role: "teacher",
-    name: "Козлов К.К.",
+    name: "ГЉГ®Г§Г«Г®Гў ГЉ.ГЉ.",
     login: "teacher3",
     password: "123",
-    department: "Кафедра ИТ",
+    department: "ГЉГ ГґГҐГ¤Г°Г  Г€Г’",
   },
   {
     id: 6,
     role: "teacher",
-    name: "Соколов С.О.",
+    name: "Г‘Г®ГЄГ®Г«Г®Гў Г‘.ГЋ.",
     login: "teacher5",
     password: "123",
-    department: "Кафедра Экономики",
+    department: "ГЉГ ГґГҐГ¤Г°Г  ГќГЄГ®Г­Г®Г¬ГЁГЄГЁ",
   },
   {
     id: 7,
     role: "teacher",
-    name: "Морозов М.М.",
+    name: "ГЊГ®Г°Г®Г§Г®Гў ГЊ.ГЊ.",
     login: "teacher6",
     password: "123",
-    department: "Кафедра Экономики",
+    department: "ГЉГ ГґГҐГ¤Г°Г  ГќГЄГ®Г­Г®Г¬ГЁГЄГЁ",
   },
   {
     id: 8,
     role: "teacher",
-    name: "Павлов П.А.",
+    name: "ГЏГ ГўГ«Г®Гў ГЏ.ГЂ.",
     login: "teacher7",
     password: "123",
-    department: "Кафедра Гуманитарных наук",
+    department: "ГЉГ ГґГҐГ¤Г°Г  ГѓГіГ¬Г Г­ГЁГІГ Г°Г­Г»Гµ Г­Г ГіГЄ",
   },
   {
     id: 9,
     role: "teacher",
-    name: "Александров А.А.",
+    name: "ГЂГ«ГҐГЄГ±Г Г­Г¤Г°Г®Гў ГЂ.ГЂ.",
     login: "teacher8",
     password: "123",
-    department: "Кафедра Гуманитарных наук",
+    department: "ГЉГ ГґГҐГ¤Г°Г  ГѓГіГ¬Г Г­ГЁГІГ Г°Г­Г»Гµ Г­Г ГіГЄ",
   },
   {
     id: 10,
     role: "teacher",
-    name: "Романов Р.Р.",
+    name: "ГђГ®Г¬Г Г­Г®Гў Гђ.Гђ.",
     login: "teacher9",
     password: "123",
-    department: "Кафедра Гуманитарных наук",
+    department: "ГЉГ ГґГҐГ¤Г°Г  ГѓГіГ¬Г Г­ГЁГІГ Г°Г­Г»Гµ Г­Г ГіГЄ",
   },
   {
     id: 11,
     role: "teacher",
-    name: "Иванов И.И.",
+    name: "Г€ГўГ Г­Г®Гў Г€.Г€.",
     login: "teacher10",
     password: "123",
-    department: "Кафедра Физкультуры",
+    department: "ГЉГ ГґГҐГ¤Г°Г  Г”ГЁГ§ГЄГіГ«ГјГІГіГ°Г»",
   },
 ];
 
 /**
- * Инициализирует базу данных в localStorage
- * При первом запуске создает:
- * - пользователей (администратор и демо-студент)
- * - группы студентов
- * - предметы
- * - счетчики ID для генерации новых идентификаторов
+ * Г€Г­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°ГіГҐГІ ГЎГ Г§Гі Г¤Г Г­Г­Г»Гµ Гў localStorage
+ * ГЏГ°ГЁ ГЇГҐГ°ГўГ®Г¬ Г§Г ГЇГіГ±ГЄГҐ Г±Г®Г§Г¤Г ГҐГІ:
+ * - ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«ГҐГ© (Г Г¤Г¬ГЁГ­ГЁГ±ГІГ°Г ГІГ®Г° ГЁ Г¤ГҐГ¬Г®-Г±ГІГіГ¤ГҐГ­ГІ)
+ * - ГЈГ°ГіГЇГЇГ» Г±ГІГіГ¤ГҐГ­ГІГ®Гў
+ * - ГЇГ°ГҐГ¤Г¬ГҐГІГ»
+ * - Г±Г·ГҐГІГ·ГЁГЄГЁ ID Г¤Г«Гї ГЈГҐГ­ГҐГ°Г Г¶ГЁГЁ Г­Г®ГўГ»Гµ ГЁГ¤ГҐГ­ГІГЁГґГЁГЄГ ГІГ®Г°Г®Гў
  */
 function initDatabase() {
-  // Инициализирует массив пользователей с админом и демо-студентом
+  // Г€Г­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°ГіГҐГІ Г¬Г Г±Г±ГЁГў ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«ГҐГ© Г± Г Г¤Г¬ГЁГ­Г®Г¬ ГЁ Г¤ГҐГ¬Г®-Г±ГІГіГ¤ГҐГ­ГІГ®Г¬
   if (!localStorage.getItem("users")) {
     const initialUsers = [
       {
         id: 1,
         role: "admin",
-        name: "Администратор",
+        name: "ГЂГ¤Г¬ГЁГ­ГЁГ±ГІГ°Г ГІГ®Г°",
         login: "admin",
         password: "123",
       },
       {
         id: 12,
         role: "student",
-        name: "Иванов И.И.",
+        name: "Г€ГўГ Г­Г®Гў Г€.Г€.",
         login: "student",
         password: "123",
         groupId: 1,
@@ -123,15 +123,15 @@ function initDatabase() {
     localStorage.setItem("users", JSON.stringify(initialUsers));
   }
   
-  // Инициализирует массив групп студентов
+  // Г€Г­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°ГіГҐГІ Г¬Г Г±Г±ГЁГў ГЈГ°ГіГЇГЇ Г±ГІГіГ¤ГҐГ­ГІГ®Гў
   if (!localStorage.getItem("groups")) {
     const initialGroups = [
-      { id: 1, name: "ИТ-2023", subjects: [] },
-      { id: 2, name: "ЭК-2023", subjects: [] },
+      { id: 1, name: "Г€Г’-2023", subjects: [] },
+      { id: 2, name: "ГќГЉ-2023", subjects: [] },
     ];
     localStorage.setItem("groups", JSON.stringify(initialGroups));
   } else {
-    // Миграция: добавляет поле subjects к существующим группам
+    // ГЊГЁГЈГ°Г Г¶ГЁГї: Г¤Г®ГЎГ ГўГ«ГїГҐГІ ГЇГ®Г«ГҐ subjects ГЄ Г±ГіГ№ГҐГ±ГІГўГіГѕГ№ГЁГ¬ ГЈГ°ГіГЇГЇГ Г¬
     const groups = JSON.parse(localStorage.getItem("groups"));
     const updated = groups.map(g => ({
       ...g,
@@ -140,20 +140,20 @@ function initDatabase() {
     localStorage.setItem("groups", JSON.stringify(updated));
   }
   
-  // Инициализирует массив предметов с демо-предметом
+  // Г€Г­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°ГіГҐГІ Г¬Г Г±Г±ГЁГў ГЇГ°ГҐГ¤Г¬ГҐГІГ®Гў Г± Г¤ГҐГ¬Г®-ГЇГ°ГҐГ¤Г¬ГҐГІГ®Г¬
   if (!localStorage.getItem("subjects")) {
     const initialSubjects = [
-      { id: 1, name: "Программирование", teacherIds: [2], hours: 72, credits: 3 },
+      { id: 1, name: "ГЏГ°Г®ГЈГ°Г Г¬Г¬ГЁГ°Г®ГўГ Г­ГЁГҐ", teacherIds: [2], hours: 72, credits: 3 },
     ];
     localStorage.setItem("subjects", JSON.stringify(initialSubjects));
   }
   
-  // Инициализирует пустой массив оценок
+  // Г€Г­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°ГіГҐГІ ГЇГіГ±ГІГ®Г© Г¬Г Г±Г±ГЁГў Г®Г¶ГҐГ­Г®ГЄ
   if (!localStorage.getItem("grades")) {
     localStorage.setItem("grades", JSON.stringify([]));
   }
 
-  // Инициализирует счетчики для автоматического генерирования ID
+  // Г€Г­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°ГіГҐГІ Г±Г·ГҐГІГ·ГЁГЄГЁ Г¤Г«Гї Г ГўГІГ®Г¬Г ГІГЁГ·ГҐГ±ГЄГ®ГЈГ® ГЈГҐГ­ГҐГ°ГЁГ°Г®ГўГ Г­ГЁГї ID
   if (!localStorage.getItem("nextUserId"))
     localStorage.setItem("nextUserId", "13");
   if (!localStorage.getItem("nextGroupId"))
@@ -161,7 +161,7 @@ function initDatabase() {
   if (!localStorage.getItem("nextSubjectId"))
     localStorage.setItem("nextSubjectId", "2");
 
-  // Инициализирует счетчик для оценок на основе существующих
+  // Г€Г­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°ГіГҐГІ Г±Г·ГҐГІГ·ГЁГЄ Г¤Г«Гї Г®Г¶ГҐГ­Г®ГЄ Г­Г  Г®Г±Г­Г®ГўГҐ Г±ГіГ№ГҐГ±ГІГўГіГѕГ№ГЁГµ
   if (!localStorage.getItem("nextGradeId")) {
     const grades = JSON.parse(localStorage.getItem("grades") || "[]");
     const maxId =
@@ -171,84 +171,84 @@ function initDatabase() {
 }
 
 /**
- * ===== ФУНКЦИИ ДЛЯ ПОЛУЧЕНИЯ ДАННЫХ (GETTERS) =====
+ * ===== Г”Г“ГЌГЉГ–Г€Г€ Г„Г‹Гџ ГЏГЋГ‹Г“Г—Г…ГЌГ€Гџ Г„ГЂГЌГЌГ›Г• (GETTERS) =====
  */
 
 /**
- * Получает массив всех пользователей из localStorage
- * @returns {Array} массив пользователей (админ, преподаватели, студенты)
+ * ГЏГ®Г«ГіГ·Г ГҐГІ Г¬Г Г±Г±ГЁГў ГўГ±ГҐГµ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«ГҐГ© ГЁГ§ localStorage
+ * @returns {Array} Г¬Г Г±Г±ГЁГў ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«ГҐГ© (Г Г¤Г¬ГЁГ­, ГЇГ°ГҐГЇГ®Г¤Г ГўГ ГІГҐГ«ГЁ, Г±ГІГіГ¤ГҐГ­ГІГ»)
  */
 function getUsers() {
   return JSON.parse(localStorage.getItem("users")) || [];
 }
 
 /**
- * Получает массив всех групп студентов
- * @returns {Array} массив групп
+ * ГЏГ®Г«ГіГ·Г ГҐГІ Г¬Г Г±Г±ГЁГў ГўГ±ГҐГµ ГЈГ°ГіГЇГЇ Г±ГІГіГ¤ГҐГ­ГІГ®Гў
+ * @returns {Array} Г¬Г Г±Г±ГЁГў ГЈГ°ГіГЇГЇ
  */
 function getGroups() {
   return JSON.parse(localStorage.getItem("groups")) || [];
 }
 
 /**
- * Получает массив всех предметов
- * @returns {Array} массив предметов с информацией о преподавателях
+ * ГЏГ®Г«ГіГ·Г ГҐГІ Г¬Г Г±Г±ГЁГў ГўГ±ГҐГµ ГЇГ°ГҐГ¤Г¬ГҐГІГ®Гў
+ * @returns {Array} Г¬Г Г±Г±ГЁГў ГЇГ°ГҐГ¤Г¬ГҐГІГ®Гў Г± ГЁГ­ГґГ®Г°Г¬Г Г¶ГЁГҐГ© Г® ГЇГ°ГҐГЇГ®Г¤Г ГўГ ГІГҐГ«ГїГµ
  */
 function getSubjects() {
   return JSON.parse(localStorage.getItem("subjects")) || [];
 }
 
 /**
- * Получает массив всех оценок студентов
- * @returns {Array} массив оценок с ID студента, предмета, оценкой и датой
+ * ГЏГ®Г«ГіГ·Г ГҐГІ Г¬Г Г±Г±ГЁГў ГўГ±ГҐГµ Г®Г¶ГҐГ­Г®ГЄ Г±ГІГіГ¤ГҐГ­ГІГ®Гў
+ * @returns {Array} Г¬Г Г±Г±ГЁГў Г®Г¶ГҐГ­Г®ГЄ Г± ID Г±ГІГіГ¤ГҐГ­ГІГ , ГЇГ°ГҐГ¤Г¬ГҐГІГ , Г®Г¶ГҐГ­ГЄГ®Г© ГЁ Г¤Г ГІГ®Г©
  */
 function getGrades() {
   return JSON.parse(localStorage.getItem("grades")) || [];
 }
 
 /**
- * ===== ФУНКЦИИ ДЛЯ СОХРАНЕНИЯ ДАННЫХ (SETTERS) =====
+ * ===== Г”Г“ГЌГЉГ–Г€Г€ Г„Г‹Гџ Г‘ГЋГ•ГђГЂГЌГ…ГЌГ€Гџ Г„ГЂГЌГЌГ›Г• (SETTERS) =====
  */
 
 /**
- * Сохраняет массив пользователей в localStorage
- * @param {Array} users - массив пользователей
+ * Г‘Г®ГµГ°Г Г­ГїГҐГІ Г¬Г Г±Г±ГЁГў ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«ГҐГ© Гў localStorage
+ * @param {Array} users - Г¬Г Г±Г±ГЁГў ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«ГҐГ©
  */
 function saveUsers(users) {
   localStorage.setItem("users", JSON.stringify(users));
 }
 
 /**
- * Сохраняет массив групп в localStorage
- * @param {Array} groups - массив групп
+ * Г‘Г®ГµГ°Г Г­ГїГҐГІ Г¬Г Г±Г±ГЁГў ГЈГ°ГіГЇГЇ Гў localStorage
+ * @param {Array} groups - Г¬Г Г±Г±ГЁГў ГЈГ°ГіГЇГЇ
  */
 function saveGroups(groups) {
   localStorage.setItem("groups", JSON.stringify(groups));
 }
 
 /**
- * Сохраняет массив предметов в localStorage
- * @param {Array} subjects - массив предметов
+ * Г‘Г®ГµГ°Г Г­ГїГҐГІ Г¬Г Г±Г±ГЁГў ГЇГ°ГҐГ¤Г¬ГҐГІГ®Гў Гў localStorage
+ * @param {Array} subjects - Г¬Г Г±Г±ГЁГў ГЇГ°ГҐГ¤Г¬ГҐГІГ®Гў
  */
 function saveSubjects(subjects) {
   localStorage.setItem("subjects", JSON.stringify(subjects));
 }
 
 /**
- * Сохраняет массив оценок в localStorage
- * @param {Array} grades - массив оценок
+ * Г‘Г®ГµГ°Г Г­ГїГҐГІ Г¬Г Г±Г±ГЁГў Г®Г¶ГҐГ­Г®ГЄ Гў localStorage
+ * @param {Array} grades - Г¬Г Г±Г±ГЁГў Г®Г¶ГҐГ­Г®ГЄ
  */
 function saveGrades(grades) {
   localStorage.setItem("grades", JSON.stringify(grades));
 }
 
 /**
- * ===== ФУНКЦИИ ДЛЯ ГЕНЕРАЦИИ ID =====
+ * ===== Г”Г“ГЌГЉГ–Г€Г€ Г„Г‹Гџ ГѓГ…ГЌГ…ГђГЂГ–Г€Г€ ID =====
  */
 
 /**
- * Получает следующий уникальный ID для пользователя и увеличивает счетчик
- * @returns {number} новый ID пользователя
+ * ГЏГ®Г«ГіГ·Г ГҐГІ Г±Г«ГҐГ¤ГіГѕГ№ГЁГ© ГіГ­ГЁГЄГ Г«ГјГ­Г»Г© ID Г¤Г«Гї ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї ГЁ ГіГўГҐГ«ГЁГ·ГЁГўГ ГҐГІ Г±Г·ГҐГІГ·ГЁГЄ
+ * @returns {number} Г­Г®ГўГ»Г© ID ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї
  */
 function getNextUserId() {
   const id = parseInt(localStorage.getItem("nextUserId"));
@@ -257,8 +257,8 @@ function getNextUserId() {
 }
 
 /**
- * Получает следующий уникальный ID для группы и увеличивает счетчик
- * @returns {number} новый ID группы
+ * ГЏГ®Г«ГіГ·Г ГҐГІ Г±Г«ГҐГ¤ГіГѕГ№ГЁГ© ГіГ­ГЁГЄГ Г«ГјГ­Г»Г© ID Г¤Г«Гї ГЈГ°ГіГЇГЇГ» ГЁ ГіГўГҐГ«ГЁГ·ГЁГўГ ГҐГІ Г±Г·ГҐГІГ·ГЁГЄ
+ * @returns {number} Г­Г®ГўГ»Г© ID ГЈГ°ГіГЇГЇГ»
  */
 function getNextGroupId() {
   const id = parseInt(localStorage.getItem("nextGroupId"));
@@ -267,8 +267,8 @@ function getNextGroupId() {
 }
 
 /**
- * Получает следующий уникальный ID для предмета и увеличивает счетчик
- * @returns {number} новый ID предмета
+ * ГЏГ®Г«ГіГ·Г ГҐГІ Г±Г«ГҐГ¤ГіГѕГ№ГЁГ© ГіГ­ГЁГЄГ Г«ГјГ­Г»Г© ID Г¤Г«Гї ГЇГ°ГҐГ¤Г¬ГҐГІГ  ГЁ ГіГўГҐГ«ГЁГ·ГЁГўГ ГҐГІ Г±Г·ГҐГІГ·ГЁГЄ
+ * @returns {number} Г­Г®ГўГ»Г© ID ГЇГ°ГҐГ¤Г¬ГҐГІГ 
  */
 function getNextSubjectId() {
   const id = parseInt(localStorage.getItem("nextSubjectId"));
@@ -277,8 +277,8 @@ function getNextSubjectId() {
 }
 
 /**
- * Получает следующий уникальный ID для оценки и увеличивает счетчик
- * @returns {number} новый ID оценки
+ * ГЏГ®Г«ГіГ·Г ГҐГІ Г±Г«ГҐГ¤ГіГѕГ№ГЁГ© ГіГ­ГЁГЄГ Г«ГјГ­Г»Г© ID Г¤Г«Гї Г®Г¶ГҐГ­ГЄГЁ ГЁ ГіГўГҐГ«ГЁГ·ГЁГўГ ГҐГІ Г±Г·ГҐГІГ·ГЁГЄ
+ * @returns {number} Г­Г®ГўГ»Г© ID Г®Г¶ГҐГ­ГЄГЁ
  */
 function getNextGradeId() {
   const id = parseInt(localStorage.getItem("nextGradeId") || "1");
@@ -287,14 +287,14 @@ function getNextGradeId() {
 }
 
 /**
- * ===== ФУНКЦИИ ВАЛИДАЦИИ =====
+ * ===== Г”Г“ГЌГЉГ–Г€Г€ Г‚ГЂГ‹Г€Г„ГЂГ–Г€Г€ =====
  */
 
 /**
- * Проверяет уникальность логина в системе
- * @param {string} login - логин для проверки
- * @param {number} excludeUserId - ID пользователя, который нужно исключить из проверки
- * @returns {boolean} true если логин уникален, false если уже существует
+ * ГЏГ°Г®ГўГҐГ°ГїГҐГІ ГіГ­ГЁГЄГ Г«ГјГ­Г®Г±ГІГј Г«Г®ГЈГЁГ­Г  Гў Г±ГЁГ±ГІГҐГ¬ГҐ
+ * @param {string} login - Г«Г®ГЈГЁГ­ Г¤Г«Гї ГЇГ°Г®ГўГҐГ°ГЄГЁ
+ * @param {number} excludeUserId - ID ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї, ГЄГ®ГІГ®Г°Г»Г© Г­ГіГ¦Г­Г® ГЁГ±ГЄГ«ГѕГ·ГЁГІГј ГЁГ§ ГЇГ°Г®ГўГҐГ°ГЄГЁ
+ * @returns {boolean} true ГҐГ±Г«ГЁ Г«Г®ГЈГЁГ­ ГіГ­ГЁГЄГ Г«ГҐГ­, false ГҐГ±Г«ГЁ ГіГ¦ГҐ Г±ГіГ№ГҐГ±ГІГўГіГҐГІ
  */
 function isLoginUnique(login, excludeUserId = null) {
   const users = getUsers();
@@ -305,10 +305,10 @@ function isLoginUnique(login, excludeUserId = null) {
 }
 
 /**
- * Проверяет возможность удаления группы
- * Группу можно удалить только если в ней нет студентов
- * @param {number} groupId - ID группы
- * @returns {boolean} true если группу можно удалить
+ * ГЏГ°Г®ГўГҐГ°ГїГҐГІ ГўГ®Г§Г¬Г®Г¦Г­Г®Г±ГІГј ГіГ¤Г Г«ГҐГ­ГЁГї ГЈГ°ГіГЇГЇГ»
+ * ГѓГ°ГіГЇГЇГі Г¬Г®Г¦Г­Г® ГіГ¤Г Г«ГЁГІГј ГІГ®Г«ГјГЄГ® ГҐГ±Г«ГЁ Гў Г­ГҐГ© Г­ГҐГІ Г±ГІГіГ¤ГҐГ­ГІГ®Гў
+ * @param {number} groupId - ID ГЈГ°ГіГЇГЇГ»
+ * @returns {boolean} true ГҐГ±Г«ГЁ ГЈГ°ГіГЇГЇГі Г¬Г®Г¦Г­Г® ГіГ¤Г Г«ГЁГІГј
  */
 function canDeleteGroup(groupId) {
   const users = getUsers();
@@ -316,10 +316,10 @@ function canDeleteGroup(groupId) {
 }
 
 /**
- * Проверяет возможность удаления предмета
- * Предмет можно удалить только если по нему нет оценок
- * @param {number} subjectId - ID предмета
- * @returns {boolean} true если предмет можно удалить
+ * ГЏГ°Г®ГўГҐГ°ГїГҐГІ ГўГ®Г§Г¬Г®Г¦Г­Г®Г±ГІГј ГіГ¤Г Г«ГҐГ­ГЁГї ГЇГ°ГҐГ¤Г¬ГҐГІГ 
+ * ГЏГ°ГҐГ¤Г¬ГҐГІ Г¬Г®Г¦Г­Г® ГіГ¤Г Г«ГЁГІГј ГІГ®Г«ГјГЄГ® ГҐГ±Г«ГЁ ГЇГ® Г­ГҐГ¬Гі Г­ГҐГІ Г®Г¶ГҐГ­Г®ГЄ
+ * @param {number} subjectId - ID ГЇГ°ГҐГ¤Г¬ГҐГІГ 
+ * @returns {boolean} true ГҐГ±Г«ГЁ ГЇГ°ГҐГ¤Г¬ГҐГІ Г¬Г®Г¦Г­Г® ГіГ¤Г Г«ГЁГІГј
  */
 function canDeleteSubject(subjectId) {
   const grades = getGrades();
@@ -327,14 +327,14 @@ function canDeleteSubject(subjectId) {
 }
 
 /**
- * ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
+ * ===== Г‚Г‘ГЏГЋГЊГЋГѓГЂГ’Г…Г‹ГњГЌГ›Г… Г”Г“ГЌГЉГ–Г€Г€ =====
  */
 
 /**
- * Отображает алертное уведомление пользователю
- * Автоматически скрывается через 3 секунды
- * @param {string} message - текст сообщения
- * @param {string} type - тип алерта (info, success, error)
+ * ГЋГІГ®ГЎГ°Г Г¦Г ГҐГІ Г Г«ГҐГ°ГІГ­Г®ГҐ ГіГўГҐГ¤Г®Г¬Г«ГҐГ­ГЁГҐ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гѕ
+ * ГЂГўГІГ®Г¬Г ГІГЁГ·ГҐГ±ГЄГЁ Г±ГЄГ°Г»ГўГ ГҐГІГ±Гї Г·ГҐГ°ГҐГ§ 3 Г±ГҐГЄГіГ­Г¤Г»
+ * @param {string} message - ГІГҐГЄГ±ГІ Г±Г®Г®ГЎГ№ГҐГ­ГЁГї
+ * @param {string} type - ГІГЁГЇ Г Г«ГҐГ°ГІГ  (info, success, error)
  */
 function showAlert(message, type = "info") {
   const container = document.getElementById("alertContainer");
@@ -349,31 +349,32 @@ function showAlert(message, type = "info") {
 }
 
 /**
- * Выполняет выход пользователя из системы
- * Очищает сессию и перенаправляет на страницу входа
+ * Г‚Г»ГЇГ®Г«Г­ГїГҐГІ ГўГ»ГµГ®Г¤ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї ГЁГ§ Г±ГЁГ±ГІГҐГ¬Г»
+ * ГЋГ·ГЁГ№Г ГҐГІ Г±ГҐГ±Г±ГЁГѕ ГЁ ГЇГҐГ°ГҐГ­Г ГЇГ°Г ГўГ«ГїГҐГІ Г­Г  Г±ГІГ°Г Г­ГЁГ¶Гі ГўГµГ®Г¤Г 
  */
 function logout() {
   sessionStorage.removeItem("currentUser");
-  window.location.href = "auth.html"; // Исправлено: было index.html
+  window.location.href = "auth.html"; // Г€Г±ГЇГ°Г ГўГ«ГҐГ­Г®: ГЎГ»Г«Г® index.html
 }
 
 /**
- * Проверяет права доступа пользователя
- * Если пользователь не авторизован или не имеет нужных прав, выполняет выход
- * @param {string} requiredRole - требуемая роль (admin, teacher, student)
- * @returns {Object|null} объект текущего пользователя или null если нет доступа
+ * ГЏГ°Г®ГўГҐГ°ГїГҐГІ ГЇГ°Г ГўГ  Г¤Г®Г±ГІГіГЇГ  ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї
+ * Г…Г±Г«ГЁ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гј Г­ГҐ Г ГўГІГ®Г°ГЁГ§Г®ГўГ Г­ ГЁГ«ГЁ Г­ГҐ ГЁГ¬ГҐГҐГІ Г­ГіГ¦Г­Г»Гµ ГЇГ°Г Гў, ГўГ»ГЇГ®Г«Г­ГїГҐГІ ГўГ»ГµГ®Г¤
+ * @param {string} requiredRole - ГІГ°ГҐГЎГіГҐГ¬Г Гї Г°Г®Г«Гј (admin, teacher, student)
+ * @returns {Object|null} Г®ГЎГєГҐГЄГІ ГІГҐГЄГіГ№ГҐГЈГ® ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї ГЁГ«ГЁ null ГҐГ±Г«ГЁ Г­ГҐГІ Г¤Г®Г±ГІГіГЇГ 
  */
 function checkAuth(requiredRole) {
   const userStr = sessionStorage.getItem("currentUser");
   if (!userStr) {
-    window.location.href = "auth.html"; // Исправлено: было index.html
+    window.location.href = "auth.html"; // Г€Г±ГЇГ°Г ГўГ«ГҐГ­Г®: ГЎГ»Г«Г® index.html
     return null;
   }
   const user = JSON.parse(userStr);
   if (requiredRole && user.role !== requiredRole) {
-    alert("Доступ запрещен");
-    window.location.href = "auth.html"; // Исправлено: было index.html
+    alert("Г„Г®Г±ГІГіГЇ Г§Г ГЇГ°ГҐГ№ГҐГ­");
+    window.location.href = "auth.html"; // Г€Г±ГЇГ°Г ГўГ«ГҐГ­Г®: ГЎГ»Г«Г® index.html
     return null;
   }
   return user;
+
 }
