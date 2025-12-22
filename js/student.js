@@ -1,13 +1,13 @@
 // JavaScript source code
 /**
- * ПАНЕЛЬ СТУДЕНТА
- * Логика для отображения информации и оценок студента
+ * ГЏГЂГЌГ…Г‹Гњ Г‘Г’Г“Г„Г…ГЌГ’ГЂ
+ * Г‹Г®ГЈГЁГЄГ  Г¤Г«Гї Г®ГІГ®ГЎГ°Г Г¦ГҐГ­ГЁГї ГЁГ­ГґГ®Г°Г¬Г Г¶ГЁГЁ ГЁ Г®Г¶ГҐГ­Г®ГЄ Г±ГІГіГ¤ГҐГ­ГІГ 
  */
 
-// Переменная для хранения текущего авторизованного студента
+// ГЏГҐГ°ГҐГ¬ГҐГ­Г­Г Гї Г¤Г«Гї ГµГ°Г Г­ГҐГ­ГЁГї ГІГҐГЄГіГ№ГҐГЈГ® Г ГўГІГ®Г°ГЁГ§Г®ГўГ Г­Г­Г®ГЈГ® Г±ГІГіГ¤ГҐГ­ГІГ 
 let currentUser = null;
 
-// Функция для экранирования HTML (добавлена)
+// Г”ГіГ­ГЄГ¶ГЁГї Г¤Г«Гї ГЅГЄГ°Г Г­ГЁГ°Г®ГўГ Г­ГЁГї HTML (Г¤Г®ГЎГ ГўГ«ГҐГ­Г )
 function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
@@ -15,8 +15,8 @@ function escapeHtml(text) {
 }
 
 /**
- * При загрузке страницы инициализирует БД, проверяет права студента
- * и загружает его информацию и оценки
+ * ГЏГ°ГЁ Г§Г ГЈГ°ГіГ§ГЄГҐ Г±ГІГ°Г Г­ГЁГ¶Г» ГЁГ­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°ГіГҐГІ ГЃГ„, ГЇГ°Г®ГўГҐГ°ГїГҐГІ ГЇГ°Г ГўГ  Г±ГІГіГ¤ГҐГ­ГІГ 
+ * ГЁ Г§Г ГЈГ°ГіГ¦Г ГҐГІ ГҐГЈГ® ГЁГ­ГґГ®Г°Г¬Г Г¶ГЁГѕ ГЁ Г®Г¶ГҐГ­ГЄГЁ
  */
 document.addEventListener('DOMContentLoaded', () => {
     initDatabase();
@@ -28,39 +28,39 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Загружает и отображает личную информацию студента:
- * ФИО, номер группы
+ * Г‡Г ГЈГ°ГіГ¦Г ГҐГІ ГЁ Г®ГІГ®ГЎГ°Г Г¦Г ГҐГІ Г«ГЁГ·Г­ГіГѕ ГЁГ­ГґГ®Г°Г¬Г Г¶ГЁГѕ Г±ГІГіГ¤ГҐГ­ГІГ :
+ * Г”Г€ГЋ, Г­Г®Г¬ГҐГ° ГЈГ°ГіГЇГЇГ»
  */
 function loadStudentInfo() {
     const nameElement = document.getElementById('studentName');
     const infoNameElement = document.getElementById('infoName');
     const infoGroupElement = document.getElementById('infoGroup');
     
-    // Отображает имя студента в шапке
+    // ГЋГІГ®ГЎГ°Г Г¦Г ГҐГІ ГЁГ¬Гї Г±ГІГіГ¤ГҐГ­ГІГ  Гў ГёГ ГЇГЄГҐ
     if (nameElement) nameElement.textContent = currentUser.name;
-    // Отображает имя студента в информационной таблице
+    // ГЋГІГ®ГЎГ°Г Г¦Г ГҐГІ ГЁГ¬Гї Г±ГІГіГ¤ГҐГ­ГІГ  Гў ГЁГ­ГґГ®Г°Г¬Г Г¶ГЁГ®Г­Г­Г®Г© ГІГ ГЎГ«ГЁГ¶ГҐ
     if (infoNameElement) infoNameElement.textContent = currentUser.name;
     
-    // Получает информацию о группе студента
+    // ГЏГ®Г«ГіГ·Г ГҐГІ ГЁГ­ГґГ®Г°Г¬Г Г¶ГЁГѕ Г® ГЈГ°ГіГЇГЇГҐ Г±ГІГіГ¤ГҐГ­ГІГ 
     const groups = getGroups();
     const group = groups.find(g => g.id == currentUser.groupId);
     if (infoGroupElement) {
-        infoGroupElement.textContent = group ? group.name : 'Не назначена';
+        infoGroupElement.textContent = group ? group.name : 'ГЌГҐ Г­Г Г§Г­Г Г·ГҐГ­Г ';
     }
 }
 
 /**
- * Загружает и отображает таблицу предметов и оценок студента
- * Для каждого предмета показывает:
- * - Название предмета
- * - ФИО преподавателя
- * - Количество часов и кредитов
- * - Полученную оценку (если есть)
- * Оценки цветируются: 5=зелёный, 4=синий, 3=оранжевый, 2=красный
+ * Г‡Г ГЈГ°ГіГ¦Г ГҐГІ ГЁ Г®ГІГ®ГЎГ°Г Г¦Г ГҐГІ ГІГ ГЎГ«ГЁГ¶Гі ГЇГ°ГҐГ¤Г¬ГҐГІГ®Гў ГЁ Г®Г¶ГҐГ­Г®ГЄ Г±ГІГіГ¤ГҐГ­ГІГ 
+ * Г„Г«Гї ГЄГ Г¦Г¤Г®ГЈГ® ГЇГ°ГҐГ¤Г¬ГҐГІГ  ГЇГ®ГЄГ Г§Г»ГўГ ГҐГІ:
+ * - ГЌГ Г§ГўГ Г­ГЁГҐ ГЇГ°ГҐГ¤Г¬ГҐГІГ 
+ * - Г”Г€ГЋ ГЇГ°ГҐГЇГ®Г¤Г ГўГ ГІГҐГ«Гї
+ * - ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г·Г Г±Г®Гў ГЁ ГЄГ°ГҐГ¤ГЁГІГ®Гў
+ * - ГЏГ®Г«ГіГ·ГҐГ­Г­ГіГѕ Г®Г¶ГҐГ­ГЄГі (ГҐГ±Г«ГЁ ГҐГ±ГІГј)
+ * ГЋГ¶ГҐГ­ГЄГЁ Г¶ГўГҐГІГЁГ°ГіГѕГІГ±Гї: 5=Г§ГҐГ«ВёГ­Г»Г©, 4=Г±ГЁГ­ГЁГ©, 3=Г®Г°Г Г­Г¦ГҐГўГ»Г©, 2=ГЄГ°Г Г±Г­Г»Г©
  * 
- * Предмет показывается, если:
- * 1. У студента уже есть оценка по предмету, ИЛИ
- * 2. Предмет привязан к группе студента
+ * ГЏГ°ГҐГ¤Г¬ГҐГІ ГЇГ®ГЄГ Г§Г»ГўГ ГҐГІГ±Гї, ГҐГ±Г«ГЁ:
+ * 1. Г“ Г±ГІГіГ¤ГҐГ­ГІГ  ГіГ¦ГҐ ГҐГ±ГІГј Г®Г¶ГҐГ­ГЄГ  ГЇГ® ГЇГ°ГҐГ¤Г¬ГҐГІГі, Г€Г‹Г€
+ * 2. ГЏГ°ГҐГ¤Г¬ГҐГІ ГЇГ°ГЁГўГїГ§Г Г­ ГЄ ГЈГ°ГіГЇГЇГҐ Г±ГІГіГ¤ГҐГ­ГІГ 
  */
 function loadGrades() {
     const subjects = getSubjects();
@@ -71,44 +71,44 @@ function loadGrades() {
     
     if (!tbody) return;
     
-    // Получает группу текущего студента
+    // ГЏГ®Г«ГіГ·Г ГҐГІ ГЈГ°ГіГЇГЇГі ГІГҐГЄГіГ№ГҐГЈГ® Г±ГІГіГ¤ГҐГ­ГІГ 
     const studentGroup = groups.find(g => g.id == currentUser.groupId);
     const groupSubjectIds = (studentGroup && studentGroup.subjects) ? studentGroup.subjects : [];
     
-    // Если предметов не найдено, показывает сообщение
+    // Г…Г±Г«ГЁ ГЇГ°ГҐГ¤Г¬ГҐГІГ®Гў Г­ГҐ Г­Г Г©Г¤ГҐГ­Г®, ГЇГ®ГЄГ Г§Г»ГўГ ГҐГІ Г±Г®Г®ГЎГ№ГҐГ­ГЁГҐ
     if (subjects.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4">Предметы не найдены</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4">ГЏГ°ГҐГ¤Г¬ГҐГІГ» Г­ГҐ Г­Г Г©Г¤ГҐГ­Г»</td></tr>';
         return;
     }
     
-    // Фильтрует предметы: показывает только те, у которых есть оценка или которые привязаны к группе
+    // Г”ГЁГ«ГјГІГ°ГіГҐГІ ГЇГ°ГҐГ¤Г¬ГҐГІГ»: ГЇГ®ГЄГ Г§Г»ГўГ ГҐГІ ГІГ®Г«ГјГЄГ® ГІГҐ, Гі ГЄГ®ГІГ®Г°Г»Гµ ГҐГ±ГІГј Г®Г¶ГҐГ­ГЄГ  ГЁГ«ГЁ ГЄГ®ГІГ®Г°Г»ГҐ ГЇГ°ГЁГўГїГ§Г Г­Г» ГЄ ГЈГ°ГіГЇГЇГҐ
     const visibleSubjects = subjects.filter(s => {
         const hasGrade = grades.some(g => g.studentId === currentUser.id && g.subjectId === s.id);
         const isInGroup = groupSubjectIds.includes(s.id);
         return hasGrade || isInGroup;
     });
     
-    // Если нет видимых предметов, показывает сообщение
+    // Г…Г±Г«ГЁ Г­ГҐГІ ГўГЁГ¤ГЁГ¬Г»Гµ ГЇГ°ГҐГ¤Г¬ГҐГІГ®Гў, ГЇГ®ГЄГ Г§Г»ГўГ ГҐГІ Г±Г®Г®ГЎГ№ГҐГ­ГЁГҐ
     if (visibleSubjects.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4">Нет предметов</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4">ГЌГҐГІ ГЇГ°ГҐГ¤Г¬ГҐГІГ®Гў</td></tr>';
         return;
     }
     
-    // Заполняет таблицу предметами и оценками
+    // Г‡Г ГЇГ®Г«Г­ГїГҐГІ ГІГ ГЎГ«ГЁГ¶Гі ГЇГ°ГҐГ¤Г¬ГҐГІГ Г¬ГЁ ГЁ Г®Г¶ГҐГ­ГЄГ Г¬ГЁ
     tbody.innerHTML = visibleSubjects.map(s => {
-        // Получает список преподавателей для предмета
+        // ГЏГ®Г«ГіГ·Г ГҐГІ Г±ГЇГЁГ±Г®ГЄ ГЇГ°ГҐГЇГ®Г¤Г ГўГ ГІГҐГ«ГҐГ© Г¤Г«Гї ГЇГ°ГҐГ¤Г¬ГҐГІГ 
         const teacherIds = s.teacherIds && s.teacherIds.length > 0 ? s.teacherIds : [];
         const teacherNames = teacherIds
             .map(id => {
                 const teacher = Teachers.find(t => t.id === id);
-                return teacher ? teacher.name : 'Неизвестен';
+                return teacher ? teacher.name : 'ГЌГҐГЁГ§ГўГҐГ±ГІГҐГ­';
             })
             .join(', ');
         
         const gradeRecord = grades.find(g => g.studentId === currentUser.id && g.subjectId === s.id);
         const grade = gradeRecord ? gradeRecord.grade : '-';
         
-        // Устанавливает цвет для оценки
+        // Г“Г±ГІГ Г­Г ГўГ«ГЁГўГ ГҐГІ Г¶ГўГҐГІ Г¤Г«Гї Г®Г¶ГҐГ­ГЄГЁ
         let gradeStyle = '';
         if (grade === 5) gradeStyle = 'color: green; font-weight: bold;';
         else if (grade === 4) gradeStyle = 'color: blue; font-weight: bold;';
@@ -119,7 +119,7 @@ function loadGrades() {
             <tr>
                 <td>${escapeHtml(s.name)}</td>
                 <td>${escapeHtml(teacherNames || '-')}</td>
-                <td>${parseInt(s.hours) || 0}ч / ${parseInt(s.credits) || 0}кр</td>
+                <td>${parseInt(s.hours) || 0}Г· / ${parseInt(s.credits) || 0}ГЄГ°</td>
                 <td style="${gradeStyle}">${grade}</td>
             </tr>
         `;
