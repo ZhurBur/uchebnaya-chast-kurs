@@ -82,7 +82,7 @@ function loadGrades() {
     
     // Если нет видимых предметов, показывает сообщение
     if (visibleSubjects.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4">Нет предметов</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4">"Нет предметов"</td></tr>';
         return;
     }
     
