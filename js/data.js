@@ -143,7 +143,7 @@ function initDatabase() {
   // Инициализирует массив предметов с демо-предметом
   if (!localStorage.getItem("subjects")) {
     const initialSubjects = [
-      { id: 1, name: "Программирование", teacherIds: [2], hours: 72, credits: 3 },
+      { id: 1, name: "Программмирование", teacherIds: [2], hours: 72, credits: 3 },
     ];
     localStorage.setItem("subjects", JSON.stringify(initialSubjects));
   }
